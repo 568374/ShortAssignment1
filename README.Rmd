@@ -1,13 +1,25 @@
 ---
-title: "Assignment 1"
+title: "Assignment 1+2"
 author: "Vishaylin J. Mahadeo"
 output: github_document
 ---
 
+#Assignment 1
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 ##Hello Octocat
 I love Octocat. She's the coolest cat in town.
 ![](https://dl.dropboxusercontent.com/u/11805474/painblogr/biostats/images/octocat.png)
+
+#Assignment 2
+##Anscombe Dataset:
+```{r quick_look = TRUE, echo = TRUE}
+data("anscombe")
+dim(anscombe)
+head(anscombe, n = 6)
+tail(anscombe, n = 6)
+summary(anscombe)
+```
