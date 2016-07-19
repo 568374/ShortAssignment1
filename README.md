@@ -1,4 +1,4 @@
-Assignment 1+2
+Assignment 1+2+3
 ================
 Vishaylin J. Mahadeo
 
@@ -65,3 +65,11 @@ summary(anscombe)
     ##  Mean   : 7.501   Mean   :7.501   Mean   : 7.50   Mean   : 7.501  
     ##  3rd Qu.: 8.570   3rd Qu.:8.950   3rd Qu.: 7.98   3rd Qu.: 8.190  
     ##  Max.   :10.840   Max.   :9.260   Max.   :12.74   Max.   :12.500
+
+Assignment 3
+============
+
+Scatter plot showing columns x1 and y1 from Anscombe dataset
+------------------------------------------------------------
+
+<img src="./figures/xy_plot-1.png" title="" alt=""  /> Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 on x1.

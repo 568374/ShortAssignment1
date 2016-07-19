@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1+2"
+title: "Assignment 1+2+3"
 author: "Vishaylin J. Mahadeo"
 output: github_document
 ---
@@ -16,10 +16,20 @@ I love Octocat. She's the coolest cat in town.
 
 #Assignment 2
 ##Anscombe Dataset:
-```{r quick_look = TRUE, echo = TRUE}
+```{r quick_look, echo = TRUE}
 data("anscombe")
 dim(anscombe)
 head(anscombe, n = 6)
 tail(anscombe, n = 6)
 summary(anscombe)
 ```
+
+#Assignment 3
+##Scatter plot showing columns x1 and y1 from Anscombe dataset
+```{r xy_plot, include = TRUE, echo = FALSE, fig.align = 'CENTRE', fig.width = 8, fig.height = 8, fig.path = './figures/', fig.format = '.svg'}
+data("anscombe")
+plot(x = anscombe$x1, y = anscombe$y1)
+fit <- lm(anscombe$y1 ~ anscombe$x1)
+abline(fit)
+```
+Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 on x1.
