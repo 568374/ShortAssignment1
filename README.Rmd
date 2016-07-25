@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1+2+3"
+title: "Assignment 1+2+3+4"
 author: "Vishaylin J. Mahadeo"
 output: github_document
 ---
@@ -19,6 +19,7 @@ I love Octocat. She's the coolest cat in town.
 ```{r quick_look, echo = TRUE}
 data("anscombe")
 dim(anscombe)
+names(anscombe)
 head(anscombe, n = 6)
 tail(anscombe, n = 6)
 summary(anscombe)
@@ -26,10 +27,30 @@ summary(anscombe)
 
 #Assignment 3
 ##Scatter plot showing columns x1 and y1 from Anscombe dataset
-```{r xy_plot, include = TRUE, echo = FALSE, fig.align = 'CENTRE', fig.width = 8, fig.height = 8, fig.path = './figures/', fig.format = '.svg'}
+```{r xy_plot, include = TRUE, echo = FALSE, fig.align = 'CENTRE', fig.width = 8, fig.height = 8, fig.path = './figures/', dev = 'svg'}
 data("anscombe")
 plot(x = anscombe$x1, y = anscombe$y1)
 fit <- lm(anscombe$y1 ~ anscombe$x1)
 abline(fit)
 ```
 Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 on x1.
+
+#Assignment 4
+##Analgesic dataset import:
+```{r data_import (chunk 1), echo = TRUE}
+
+```
+
+##Analgesic dataset summary
+{r data_summary (chunk 2), echo = TRUE}
+dim(df)
+names(anscombe)
+head(df, n = 6)
+tail(df, n = 6)
+summary(df)
+
+
+##Analgesic
+```{r data_tidy (chunk 3), echo = TRUE}
+
+```

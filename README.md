@@ -1,4 +1,4 @@
-Assignment 1+2+3
+Assignment 1+2+3+4
 ================
 Vishaylin J. Mahadeo
 
@@ -22,6 +22,12 @@ dim(anscombe)
 ```
 
     ## [1] 11  8
+
+``` r
+names(anscombe)
+```
+
+    ## [1] "x1" "x2" "x3" "x4" "y1" "y2" "y3" "y4"
 
 ``` r
 head(anscombe, n = 6)
@@ -72,4 +78,18 @@ Assignment 3
 Scatter plot showing columns x1 and y1 from Anscombe dataset
 ------------------------------------------------------------
 
-<img src="./figures/xy_plot-1.png" title="" alt=""  /> Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 on x1.
+<img src="./figures/xy_plot-1.svg" title="" alt=""  /> Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 on x1.
+
+Assignment 4
+============
+
+Analgesic dataset import:
+-------------------------
+
+Analgesic dataset summary
+-------------------------
+
+{r data\_summary (chunk 2), echo = TRUE} dim(df) names(anscombe) head(df, n = 6) tail(df, n = 6) summary(df)
+
+Analgesic
+---------
