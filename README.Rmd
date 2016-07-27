@@ -38,19 +38,26 @@ Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 o
 #Assignment 4
 ##Analgesic dataset import:
 ```{r data_import (chunk 1), echo = TRUE}
-
+df <- read.csv("analgesic.csv")
 ```
 
 ##Analgesic dataset summary
-{r data_summary (chunk 2), echo = TRUE}
+```{r data_summary (chunk 2), echo = TRUE}
 dim(df)
-names(anscombe)
+names(df)
 head(df, n = 6)
 tail(df, n = 6)
 summary(df)
+```
 
-
-##Analgesic
+##Analgesic dataset grouped by measurements
 ```{r data_tidy (chunk 3), echo = TRUE}
-
+gathered <- gather(data = df,
+                   key = measurement, 
+                   value = Measurement_1:Measurement_3,
+                   na.rm = FALSE,
+                   convert = FALSE,
+                   factor_key = FALSE)
+by_measurements <- group_by(gathered, measurement)
+summarize(by_measurements, mean(measurement))
 ```
