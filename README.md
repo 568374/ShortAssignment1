@@ -271,7 +271,11 @@ Nausea
 
 **Alternative hypthesis:** 5HT3 receptor blocker does reduce nausea in breast cancer patients.
 
+<<<<<<< HEAD
 Paired, non-parametric (after adjustments), ordinal dataset. Therefore a Wilcox rank test is required.
+=======
+Paired, parametric, ordinal dataset. Therefore a McNemar;s Chi-Squared with continuity correction required.
+>>>>>>> edf02aff30063d89cfa6d8c4fd090eb0336f6bf5
 
 Significance interval set at 95%, reject null hypothesis if p &lt; 0.05
 
