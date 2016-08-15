@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1+2+3+4"
+title: "Assignment 1+2+3+4+5"
 author: "Vishaylin J. Mahadeo"
 output: github_document
 ---
@@ -17,20 +17,20 @@ I love Octocat. She's the coolest cat in town.
 #Assignment 2
 ##Anscombe Dataset:
 ```{r quick_look, echo = TRUE}
-data("anscombe")
-dim(anscombe)
-names(anscombe)
-head(anscombe, n = 6)
-tail(anscombe, n = 6)
-summary(anscombe)
+data("anscombe")                      #loading anscombe dataset
+dim(anscombe)                         #dimensions of dataset
+names(anscombe)                       #column titles
+head(anscombe, n = 6)                 #first 6 rows of dataset
+tail(anscombe, n = 6)                 #last 6 rows of dataset
+summary(anscombe)                     #summary of entire layout of dataset
 ```
 
 #Assignment 3
 ##Scatter plot showing columns x1 and y1 from Anscombe dataset
-```{r xy_plot, include = TRUE, echo = FALSE, fig.align = 'CENTRE', fig.width = 8, fig.height = 8, fig.path = './figures/', dev = 'svg'}
+```{r xy_plot, include = TRUE, echo = FALSE, fig.align = 'center', fig.width = 8, fig.height = 8, fig.path = './figures/', dev = 'svg'}
 data("anscombe")
-plot(x = anscombe$x1, y = anscombe$y1)
-fit <- lm(anscombe$y1 ~ anscombe$x1)
+plot(x = anscombe$x1, y = anscombe$y1)        #to plot a scatter plot
+fit <- lm(anscombe$y1 ~ anscombe$x1)          #line of best fit
 abline(fit)
 ```
 Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 on x1.
@@ -38,26 +38,90 @@ Figure 1: Scatter plot showing Anscombe dataset, with line of regression of y1 o
 #Assignment 4
 ##Analgesic dataset import:
 ```{r data_import (chunk 1), echo = TRUE}
-df <- read.csv("analgesic.csv")
+library(readr)
+df <- read_csv("analgesic.csv")               #load analgesic dataset
 ```
 
 ##Analgesic dataset summary
 ```{r data_summary (chunk 2), echo = TRUE}
-dim(df)
-names(df)
-head(df, n = 6)
-tail(df, n = 6)
-summary(df)
+dim(df)                                       #dimensions of dataset
+names(df)                                     #column titles
+head(df, n = 6)                               #first 6 rows of dataset
+tail(df, n = 6)                               #last 6 rows of dataset
+summary(df)                                   #summary of entire layout
 ```
 
 ##Analgesic dataset grouped by measurements
-```{r data_tidy (chunk 3), echo = TRUE}
+```{r data_tidy (chunk 3), echo = TRUE, warning = FALSE}
+library(dplyr)
+library(tidyr)
 gathered <- gather(data = df,
                    key = measurement, 
-                   value = Measurement_1:Measurement_3,
+                   value = data, Measurement_1:Measurement_3,
                    na.rm = FALSE,
                    convert = FALSE,
-                   factor_key = FALSE)
-by_measurements <- group_by(gathered, measurement)
-summarize(by_measurements, mean(measurement))
+                   factor_key = FALSE)        #gather into measurement column
+by_id <- group_by(gathered, ID)               #group by subect ID
+report <- summarize(by_id, mean(data))        #average of measurements by_id
+report                                        #print results
 ```
+
+#Assignment 5
+##Chicken weights
+**Null hypothesis:** Chicken feed has no effect on chicken weight
+
+**Alternative hypothesis:** Chicken feed has a direct effect on chicken weight
+
+Unpaired, Parametric data set with more than 2 groups therefore a One-Way ANOVA is required to test hypothesis.
+
+Significance interval set at 95%, df = 5.
+
+If p value < F-value then reject null hypothesis.
+``` {r chicken (chunk 1), echo = TRUE}
+library(readr)
+df_chicken <- read_csv("chick-weights.csv")           #load dataset
+boxplot(weight ~ feed, data = df_chicken)             #parametric check
+chicken_test <- aov(weight ~ feed, data = df_chicken) #1-way ANOVA test
+summary(chicken_test)                                 #summary of test
+```
+F-value = 15.37 , p-value = 5.94e-10. p< F, therefore reject null hypothesis.
+
+Therefore we can conclude that chicken feed has a direct effect on chicken weight.
+
+##The Hot Zone
+**Null hypothesis:** Drinking water does not cause gastroenteritis.
+
+**Alternative hypothesis:** Drinking water did cause gastroenteritis.
+
+Unpaired, non-parametric, categorical dataset. Therefore a Fisher's Exact test will be used to test hypothesis.
+
+Significance interval set at 95%, reject null hypothesis if p < 0.05
+``` {r hot (chunk 2), echo = TRUE}
+df_hot <- read_csv("gastroenteritis.csv")             #load dataset
+df_table <- table(df_hot$Consumption, df_hot$Outcome) #create contiguency tab
+hot_test <- fisher.test(df_table)                     #Fishers test
+hot_test
+```
+p = 2.2e-16 therefore reject null hypothesis.
+
+In conclusion the drinking water did cause gasteroenteritis.
+
+
+##Nausea
+**Null hypothesis:** 5HT3 receptor blocker does not reduce nausea in breast cancer patients.
+
+**Alternative hypthesis:** 5HT3 receptor blocker does reduce nausea in breast cancer patients.
+
+Paired, non-parametric (after adjustments), ordinal dataset. Therefore a Wilcox rank test is required.
+
+Significance interval set at 95%, reject null hypothesis if p < 0.05
+``` {r nausea, echo = TRUE}
+df_nausea <- read_csv("nausea.csv")           #load dataset
+nausea_new <- df_nausea[-8,-1]                #exclude outlier
+nausea_new
+boxplot(nausea_new)                           #parametric check
+wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)   #Wilcox stat test
+```
+p-value = 0.04983, therefore reject null hypothesis.
+
+In conclusion the 5Ht3 receptor blocker does reduce nausea in breast cancer patients.
