@@ -1,4 +1,4 @@
-Assignment 1+2+3+4+5
+Assignment 1+2+3+4+5+6
 ================
 Vishaylin J. Mahadeo
 
@@ -271,11 +271,7 @@ Nausea
 
 **Alternative hypthesis:** 5HT3 receptor blocker does reduce nausea in breast cancer patients.
 
-<<<<<<< HEAD
-Paired, non-parametric (after adjustments), ordinal dataset. Therefore a Wilcox rank test is required.
-=======
-Paired, parametric, ordinal dataset. Therefore a McNemar;s Chi-Squared with continuity correction required.
->>>>>>> edf02aff30063d89cfa6d8c4fd090eb0336f6bf5
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD Paired, non-parametric (after adjustments), ordinal dataset. Therefore a Wilcox rank test is required. ======= Paired, non-parametric (after adjustment), ordinal dataset. Therefore a Wilcox rank test is required. &gt;&gt;&gt;&gt;&gt;&gt;&gt; edf02aff30063d89cfa6d8c4fd090eb0336f6bf5
 
 Significance interval set at 95%, reject null hypothesis if p &lt; 0.05
 
@@ -319,3 +315,117 @@ wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)   #W
 p-value = 0.04983, therefore reject null hypothesis.
 
 In conclusion the 5Ht3 receptor blocker does reduce nausea in breast cancer patients.
+
+Assignment 6
+============
+
+House Prices
+------------
+
+**Null hypothesis:** Interest rate does not affect the price of houses (USD).
+
+**Alternative hypothesis:** Interest rate does affect the price of houses (USD)
+
+**Assumptions:**
+
+> Interest rate and House prices (USD) are in interval scale
+
+> There are no outliers
+
+> The interest rates are independent to house price without measurment error.
+
+> The residuals are normally distributed, because they do fit on a normal Q-Q plot.
+
+> Thus the residuals are homoskadastic as they show spread around the 0 abline.
+
+> Therefore a Pearson's correlation is required to analyse data.
+
+Reject null hypothesis if rho = 0. Significance set to p &lt; 0.05.
+
+``` r
+library(tidyr)
+library(dplyr)
+df_house <- read_csv("housing-prices.csv")              #load dataset
+head(df_house, 4)                                       #First 4 rows of dataset
+```
+
+    ## # A tibble: 4 x 2
+    ##   interest_rate median_house_price_USD
+    ##           <int>                  <int>
+    ## 1            10                 183800
+    ## 2            10                 183200
+    ## 3            10                 174900
+    ## 4             9                 173500
+
+``` r
+plot(df_house$interest_rate, df_house$median_house_price_USD,
+     main = 'Interest rates plotted against housing prices',
+     xlab = 'Interest rate (%)', ylab = 'Median house price (USD)',
+     xlim = c(5,10), ylim = c(150000,330000))             #scatter plot of dataset
+
+house_fit <- lm(median_house_price_USD ~ interest_rate, data = df_house)  #regression line of dataset
+abline(house_fit)                                       #plotted regression line
+```
+
+<img src="./figures/house-1.svg" style="display: block; margin: auto;" />
+
+``` r
+summary(house_fit)                                      #summary of regression 
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = median_house_price_USD ~ interest_rate, data = df_house)
+    ## 
+    ## Residuals:
+    ##    Min     1Q Median     3Q    Max 
+    ## -55865 -31631 -16406  27212  80735 
+    ## 
+    ## Coefficients:
+    ##               Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)     399229      74427   5.364 9.99e-05 ***
+    ## interest_rate   -24309       9205  -2.641   0.0194 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 43180 on 14 degrees of freedom
+    ##   (1 observation deleted due to missingness)
+    ## Multiple R-squared:  0.3325, Adjusted R-squared:  0.2848 
+    ## F-statistic: 6.974 on 1 and 14 DF,  p-value: 0.01937
+
+``` r
+plot(x = house_fit$fitted, y = house_fit$residuals)     #Check homoskedasticity
+abline(h = 0)
+```
+
+<img src="./figures/house-2.svg" style="display: block; margin: auto;" />
+
+``` r
+qqnorm(house_fit$residuals)                   #check for Gaussian residual distribution
+qqline(house_fit$residuals)                   
+```
+
+<img src="./figures/house-3.svg" style="display: block; margin: auto;" />
+
+``` r
+house_test <- with(df_house,
+                   cor.test(x = interest_rate, y = median_house_price_USD,
+                            method = 'pearson'))       #Spearman correlation test
+house_test                                              #Print out stats summary
+```
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  interest_rate and median_house_price_USD
+    ## t = -2.6409, df = 14, p-value = 0.01937
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  -0.8339619 -0.1133269
+    ## sample estimates:
+    ##        cor 
+    ## -0.5766386
+
+Rho not equal to zero, df = 14, p = 0.01937, therefore reject null hypothesis.
+
+In conclusion interest rate does influence the price of houses (USD).
